@@ -54,14 +54,15 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: artifact
-      - run: tar zxvf ./artifact.tgz
+      - name: Extract artifact
+        run: tar zxvf ./artifact.tgz
       - name: Login to container repository
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
         with:
           registry: ${{ env.CONTAINER_REGISTRY }}
           username: ${{ env.CONTAINER_REGISTRY_USERNAME }}
-          password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+          password: ${{ env.CONTAINER_REGISTRY_PASSWORD }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
