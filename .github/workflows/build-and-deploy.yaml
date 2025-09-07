@@ -54,7 +54,14 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: artifact
-      - run: tar zxvf ./artifact.tgz
+      - name: Extract artifact
+        run: tar zxvf ./artifact.tgz
+      - name: Check Docker Hub password
+        run: |
+          if [ -z "${{ secrets.DOCKER_HUB_PASSWORD }}" ]; then
+            echo "ERROR: DOCKER_HUB_PASSWORD is not set or is blank."
+            exit 1
+          fi
       - name: Login to container repository
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v3
