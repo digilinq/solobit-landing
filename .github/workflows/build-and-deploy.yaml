@@ -81,6 +81,7 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    if: github.event_name != 'pull_request'
     needs: 
       - create-docker-image
     steps:
