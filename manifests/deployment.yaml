@@ -15,5 +15,5 @@ spec:
         app.kubernetes.io/name: solobit-landing
     spec:
       containers:
-      - image: docker.io/solobit-landing/solobit-landing
+      - image: docker.io/lazycomputing/solobit-landing
         name: solobit-landing
