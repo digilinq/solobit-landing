@@ -1,4 +1,4 @@
-name: Deploy to Kubernetes
+name: Manual Deployment
 on:
   workflow_dispatch:
     inputs:
@@ -10,7 +10,9 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 jobs:
-  deploy:    
+  deploy:
+    env:
+      IMAGE_NAME: docker.io/lazycomputing/solobit-landing    
     name: Deploy
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +41,7 @@ jobs:
           echo "image_tag=$IMAGE_TAG" >> $GITHUB_OUTPUT
       - name: Print tag
         run: |
-          echo "Using image tag: ${{ steps.set_tag.outputs.image_tag }}"
+          echo "${{ env.IMAGE_NAME }}:${{ steps.set_tag.outputs.image_tag }}"
       - name: Deploy to the Kubernetes cluster
         if: ${{ false }}
         uses: azure/k8s-deploy@v4
